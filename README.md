@@ -139,7 +139,7 @@ The image show that:
 - The server load 99.9p of the application in **48.92 ms**.
 
 
-### Test 1: 1000 Connections for 180 seconds
+### Test 2: 1000 Connections for 180 seconds
 In the second test, we used 1000 connections, and we will test if all the service meshes can resist.
 > command: **fortio load -c 1000 -qps 0 -t 180 http://<ip>:3000**, ip will be modified for each service
 
@@ -201,7 +201,7 @@ The image show that:
 ## Conclusion:
 
 - From the tests we conclude that linkerd take more time to load the application +100%.
-- Without using a service mesh or using consul, the server can respond to qps more than 25% when we use istio, and 350% when we use Linkerd.
+- Without using a service mesh or using consul, the server can respond to qps 25% better than istio, and 350% better than Linkerd.
 
 -But! another performance benchmarking test of istio and linkerd shared on https://medium.com/@ihcsim/linkerd-2-0-and-istio-performance-benchmark-df290101c2bb 
-shows that linkerd performe better than Istio, in our test we conclude the inverse.
+shows that linkerd perform better than Istio, in our test we conclude the inverse.
