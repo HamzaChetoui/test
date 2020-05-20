@@ -18,7 +18,7 @@ In our case, we are using **Fotio** as a benchmarking tool.
 https://github.com/fortio/fortio
 
 ## Step 1: Organisation
-- Before Beginning the Benchmarking, we need to organize things well, that's why we create for each service mesh a **namespace**.
+- Before we begin the Benchmarking, we need to organize things well, that's why we create for each service mesh a **namespace**.
 <p align="center">
 <img src="docs/img/namespaces.JPG"/>
 </p>
@@ -90,13 +90,13 @@ Now we will connect to our virtual machine using SSH for using our benchmarking 
 To benchmark the applications, we will use **Connections** and **qps: Query per seconds**. and we will test how much connections and query per seconds can our application supports.
 
 To do that we will use the command:
-> fortio load -c <Number of connections> -qps <number of qps> -t <time> http://<ip>:<port>
+> fortio load -c <Number of connections> -qps <number of qps> -t <time> http://ip:port
 
 - The command can give in how much time can our server load 50%, 75%, 99% and 99.9% of our applications 
 - In our tests we will use -qps 0, fortio will consider 0 like try to reach the maximum qps possible.
 ### Test 1: 400 Connections for 10 seconds
 In our first test, we used 400 connections, and we will test if all the service meshes can resist.
-> command: **fortio load -c 400 -qps 0 -t 10 http://<ip>:3000**, ip will be modified for each service
+> command: **fortio load -c 400 -qps 0 -t 10 http://externalIp:3000**, ip will be modified for each service
 
 #### No Service mesh: 
 
@@ -200,7 +200,7 @@ The image show that:
 
 ## Conclusion:
 
-- From the tests we conclude that linkerd take for time to load the application +100%.
+- From the tests we conclude that linkerd take more time to load the application +100%.
 - Without using a service mesh or using consul, the server can respond to qps more than 25% when we use istio, and 350% when we use Linkerd.
 
 -But! another performance benchmarking test of istio and linkerd shared on https://medium.com/@ihcsim/linkerd-2-0-and-istio-performance-benchmark-df290101c2bb 
