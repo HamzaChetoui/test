@@ -70,6 +70,12 @@ Check app/consul-injection repository to take a look.
 <img src="docs/img/consul/proxies-injection-result.JPG"/>
 </p>
 
+#### Services:
+- After the deployment of the applications, we will use the external ip of each service to test each service mesh.
+- This image contains external and port of each application taht we will use.
+<p align="center">
+<img src="docs/img/svcs.JPG"/>
+</p>
 
 ## Step 3: Low latency
 
@@ -78,4 +84,124 @@ Check app/consul-injection repository to take a look.
 
 ## Step 4: Testing
 
+In the privious steps, we created 4 namespaces, 4 aplications each application for a service mesh, we installed Fortio inside an Azure VM.
+Now we will connect to our virtual machine using SSH for using our benchmarking software.
+
+To benchmark the applications, we will use **Connections** and **qps: Query per seconds**. and we will test how much connections and query per seconds can our application supports.
+
+To do that we will use the command:
+> fortio load -c <Number of connections> -qps <number of qps> -t <time> http://<ip>:<port>
+
+- The command can give in how much time can our server load 50%, 75%, 99% and 99.9% of our applications 
+- In our tests we will use -qps 0, fortio will consider 0 like try to reach the maximum qps possible.
+### Test 1: 400 Connections for 10 seconds
+In our first test, we used 400 connections, and we will test if all the service meshes can resist.
+> command: **fortio load -c 400 -qps 0 -t 10 http://<ip>:3000**, ip will be modified for each service
+
+#### No Service mesh: 
+
+<p align="center">
+<img src="docs/img/400c/without.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **15 200 qps**.
+- The server load 99.9p of the application in **13.9 ms**.
+
+#### Istio: 
+
+<p align="center">
+<img src="docs/img/400c/istio.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **13 056 qps**.
+- The server load 99.9p of the application in **15.5 ms**.
+
+#### Consul: 
+
+<p align="center">
+<img src="docs/img/400c/consul.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **14 747 qps**.
+- The server load 99.9p of the application in **18.66 ms**.
+
+#### Linkerd: 
+
+<p align="center">
+<img src="docs/img/400c/consul.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **5 734 qps**.
+- The server load 99.9p of the application in **48.92 ms**.
+
+
+### Test 1: 1000 Connections for 180 seconds
+In the second test, we used 1000 connections, and we will test if all the service meshes can resist.
+> command: **fortio load -c 1000 -qps 0 -t 180 http://<ip>:3000**, ip will be modified for each service
+
+#### No Service mesh: 
+
+<p align="center">
+<img src="docs/img/1000c-180s/without.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **15 071 qps**.
+- The server load 99.9p of the application in **32.4 ms**.
+
+#### Istio: 
+
+<p align="center">
+<img src="docs/img/1000c-180s/istio.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **12 601 qps**.
+- The server load 99.9p of the application in **32.7 ms**.
+
+#### Consul: 
+
+<p align="center">
+<img src="docs/img/1000c-180s/consul.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **14 965 qps**.
+- The server load 99.9p of the application in **35.5 ms**.
+
+#### Linkerd: 
+
+<p align="center">
+<img src="docs/img/1000c-180s/consul.JPG"/>
+</p>
+
+The image show that:
+- The server can respond to **4 282 qps**.
+- The server load 99.9p of the application in **71.67 ms**.
+
+
 ## Result:
+
+#### Query per seconds comparison:
+
+<p align="center">
+<img src="docs/img/graph/qps.JPG"/>
+</p>
+
+#### Application loading per seconds:
+
+<p align="center">
+<img src="docs/img/graph/percentile.JPG"/>
+</p>
+
+## Conclusion:
+
+- From the tests we conclude that linkerd take for time to load the application +100%.
+- Without using a service mesh or using consul, the server can respond to qps more than 25% when we use istio, and 350% when we use Linkerd.
+
+-But! another performance benchmarking test of istio and linkerd shared on https://medium.com/@ihcsim/linkerd-2-0-and-istio-performance-benchmark-df290101c2bb 
+shows that linkerd performe better than Istio, in our test we conclude the inverse.
