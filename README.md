@@ -2,7 +2,7 @@
 
 In this article we will try to benchmark the performance of kubernetes without service mesh injection, Consul, Linkerd, and Istio service meshes.
 
-#Cluster infos:
+# Cluster infos:
 The cluster that we are using is an Azure cluster AKS, Here is informations about our cluster :
 - Cluster's **datacenter Region** : **East Us**
 - Cluster contains ** 2 Nodes **
@@ -13,7 +13,7 @@ The cluster that we are using is an Azure cluster AKS, Here is informations abou
 <img src="docs/img/cluster-capacity.JPG"/>
 </p>
   
-#Benchmarking tool:
+# Benchmarking tool:
 In our case, we are using **Fotio** as a benchmarking tool.
 https://github.com/fortio/fortio
 
