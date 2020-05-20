@@ -12,7 +12,7 @@ This tutorial based on github repository: https://github.com/hashicorp/demo-cons
 Clone it using azure shell:
 
 <p align="center">
-<img src="docs/img/aks-configuration/2-clone-project.PNG"/>
+<img src="doc/img/aks-configuration/2-clone-project.PNG"/>
 </p>
 
 ### Create AKS Cluster:
@@ -25,33 +25,33 @@ To create our consul cluster, we will use our cloned repository.
 $ **az ad sp create-for-rbac --skip-assignment**
 
 <p align="center">
-<img src="docs/img/aks-configuration/3-az.PNG"/>
+<img src="doc/img/aks-configuration/3-az.PNG"/>
 </p>
 
 - Open new terraform.tfvars file and add appId and password variables on it.
 	**Code terraform.tfvars**, you can use any file editor.
 
 <p align="center">
-<img src="docs/img/aks-configuration/5-terraform-content.PNG"/>
+<img src="doc/img/aks-configuration/5-terraform-content.PNG"/>
 </p>
 
 - Initialize terraform:
 
 <p align="center">
-<img src="docs/img/aks-configuration/6-terrafrom-initialize.PNG"/>
+<img src="doc/img/aks-configuration/6-terrafrom-initialize.PNG"/>
 </p>
 
 - Terraform apply: using appId and password
 
 <p align="center">
-<img src="docs/img/aks-configuration/7-create-cluster.PNG"/>
+<img src="doc/img/aks-configuration/7-create-cluster.PNG"/>
 </p>
 
 Ps: It will take some 10min to setup the cluster
 Result: The creation of k8s cluster and resource group!
 
 <p align="center">
-<img src="docs/img/aks-configuration/8-cluster-created.PNG"/>
+<img src="doc/img/aks-configuration/8-cluster-created.PNG"/>
 </p>
 
 ### Enable the k8s dashboard:
@@ -60,14 +60,14 @@ Using the command :
 > $ kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 
 <p align="center">
-<img src="docs/img/aks-configuration/9-kubernetes-dashboard.PNG"/>
+<img src="doc/img/aks-configuration/9-kubernetes-dashboard.PNG"/>
 </p>
 
 View the k8s dashboard using the command:
 > 	az aks browse --resource-group groupName --name clusterName
 
 <p align="center">
-<img src="docs/img/aks-configuration/11-result.PNG"/>
+<img src="doc/img/aks-configuration/11-result.PNG"/>
 </p>
 
 ### Consul configuration:
@@ -80,26 +80,26 @@ Consul installation using Helm:
 -	We can now use helm to install Consul using the consul-helm chart that we are cloned.
 
 <p align="center">
-<img src="docs/img/consul-configuration/2-result.PNG"/>
+<img src="doc/img/consul-configuration/2-result.PNG"/>
 </p>
 
 - We can use some Kubernetes commands to check consult’s deployments and pods that are created:
 
 <p align="center">
-<img src="docs/img/consul-configuration/3-kubernetes-services-in-azure-cluster.PNG"/>
+<img src="doc/img/consul-configuration/3-kubernetes-services-in-azure-cluster.PNG"/>
 </p>
 
 -	We can access to Consul dashboard by using exernal ip of consul ui service.
 
 <p align="center">
-<img src="docs/img/consul-configuration/4-additional-informations.PNG"/>
+<img src="doc/img/consul-configuration/4-additional-informations.PNG"/>
 </p>
 
 In our case the external ip is: 52.183.76.198
 -	Using dashboard:
 
 <p align="center">
-<img src="docs/img/consul-configuration/5-use-external-ip-of-svc-cnsul-ui-to-access-to-dashboard.PNG"/>
+<img src="doc/img/consul-configuration/5-use-external-ip-of-svc-cnsul-ui-to-access-to-dashboard.PNG"/>
 </p>
 
 ### Deploy Microservices using consul:
@@ -115,17 +115,17 @@ this pod use a docker image “hashicorp/counting-service:0.0.2” with containe
 Now we need to apply our yaml files using the command **kubectl apply -f 04-yaml-connect-envoy**
 
 <p align="center">
-<img src="docs/img/deploy-microservices/1-deploy-microsrvice.PNG"/>
+<img src="doc/img/deploy-microservices/1-deploy-microsrvice.PNG"/>
 </p>
 
 And now our application is available outside the cluster by using the external IP address 13.66.131.63:
 
 <p align="center">
-<img src="docs/img/deploy-microservices/svc.JPG"/>
+<img src="doc/img/deploy-microservices/svc.JPG"/>
 </p>
 
 Result:
 
 <p align="center">
-<img src="docs/img/deploy-microservices/2-result.PNG"/>
+<img src="doc/img/deploy-microservices/2-result.PNG"/>
 </p>
